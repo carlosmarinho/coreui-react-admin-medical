@@ -1,35 +1,45 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { connect } from 'react-redux';
+
+import { fetchDoctors } from '../../actions/doctors';
+
 
 import doctorsData from './DoctorsData'
 
 function DoctorRow(props) {
+
+  console.log("props aqui: ", props);
   const doctor = props.doctor
   const doctorLink = `/doctors/${doctor.id}`
 
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Banned' ? 'danger' :
-            'primary'
-  }
 
   return (
     <tr key={doctor.id.toString()}>
-      <th scope="row"><Link to={doctorLink}>{doctor.id}</Link></th>
       <td><Link to={doctorLink}>{doctor.name}</Link></td>
-      <td>{doctor.registered}</td>
-      <td>{doctor.role}</td>
-      <td><Link to={doctorLink}><Badge color={getBadge(doctor.status)}>{doctor.status}</Badge></Link></td>
+      <td>{doctor.crm}</td>
+      <td>{doctor.telefone}</td>
+      <td>{doctor.activity.name}</td>
     </tr>
   )
 }
 
 class Doctors extends Component {
 
+  componentDidMount(){
+    this.props.fetchDoctors();
+  }
+
   render() {
+
+
+    let doctors = [];
+    if(this.props.doctors){
+      doctors = this.props.doctors;
+    }
+
+    console.log("Doctors aqui no render: ", this.props, " --- ", doctors);
 
     const doctorList = doctorsData.filter((doctor) => doctor.id < 10)
 
@@ -45,15 +55,14 @@ class Doctors extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">name</th>
-                      <th scope="col">registered</th>
-                      <th scope="col">role</th>
-                      <th scope="col">status</th>
+                      <th scope="col">Nome</th>
+                      <th scope="col">CRM</th>
+                      <th scope="col">Telefone</th>
+                      <th scope="col">Especialidade</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {doctorList.map((doctor, index) =>
+                    {doctors.map((doctor, index) =>
                       <DoctorRow key={index} doctor={doctor}/>
                     )}
                   </tbody>
@@ -67,4 +76,12 @@ class Doctors extends Component {
   }
 }
 
-export default Doctors;
+function mapStateToProps(state){
+  return({
+      doctors: state.doctors,
+      message: state.message
+  })
+}
+
+
+export default connect(mapStateToProps, {fetchDoctors})(Doctors)

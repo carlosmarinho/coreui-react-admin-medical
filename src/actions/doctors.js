@@ -7,7 +7,7 @@ export async function createDoctor(doctor) {
     console.log("vai criar o doutor");
     let request;
     try{
-        request = await axios.post(`${process.env.REACT_APP_URL_API}/api/doctors`, doctor);
+        request = await axios.post(`${process.env.REACT_APP_URL_API}api/doctors`, doctor);
         console.log("vai enviar o request para criar: ", request);
         if(request.statusText == 'OK'){
             return({
@@ -37,7 +37,7 @@ export async function editDoctor(id, values, callback) {
     console.log("vai criar o doutor");
     let request;
     try{
-        request = await axios.put(`${process.env.REACT_APP_URL_API}/api/doctors${id}`, values);
+        request = await axios.put(`${process.env.REACT_APP_URL_API}api/doctors${id}`, values);
         console.log("vai enviar o request para criar: ", request);
         if(request.statusText === 'OK'){
             return({
@@ -67,11 +67,11 @@ export const removeDoctor = (ids) => {
     console.log("aqui ids: ", ids);
     let request = null;
     if( ids instanceof Array && ids.length > 1) {
-        request = axios.delete(`${process.env.REACT_APP_URL_API}/api/doctor`, {params: ids});
+        request = axios.delete(`${process.env.REACT_APP_URL_API}api/doctor`, {params: ids});
     }
     else{
         console.log("ué não é array como pode isso?")
-        request = axios.delete(`${process.env.REACT_APP_URL_API}/api/doctor/${ids}`);
+        request = axios.delete(`${process.env.REACT_APP_URL_API}api/doctor/${ids}`);
     }
 
 
@@ -85,7 +85,7 @@ export const removeDoctor = (ids) => {
 
 export const fetchDoctor = (id) => {
 
-    const request = axios.get(`${process.env.REACT_APP_URL_API}/api/doctor/${id}`);
+    const request = axios.get(`${process.env.REACT_APP_URL_API}api/doctor/${id}`);
 
     return {
         type: FETCH_DOCTOR,
@@ -94,7 +94,7 @@ export const fetchDoctor = (id) => {
 }
 
 export const fetchDoctors = () => {
-    const request = axios.get(`${process.env.REACT_APP_URL_API}/api/doctor`);
+    const request = axios.get(`${process.env.REACT_APP_URL_API}api/doctors`);
     console.log("------ vai chamar o fetchDoctors -------")
 
     return {

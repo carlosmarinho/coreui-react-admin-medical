@@ -16,6 +16,7 @@
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
     "@coreui/icons": "0.3.0",
     "@coreui/react": "~2.1.5",
+    "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "classnames": "^2.2.6",
@@ -36,6 +37,7 @@
     "react-test-renderer": "^16.8.5",
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
+    "redux-form": "^8.2.0",
     "redux-promise": "^0.6.0",
     "simple-line-icons": "^2.4.1"
   },

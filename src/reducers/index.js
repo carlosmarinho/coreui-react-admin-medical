@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
-import Users from './userReducer';
+import Doctors from './doctorReducer';
 import Messages from './messageReducer';
 
 
 export default combineReducers({
-    users: Users,
+    doctors: Doctors,
     message: Messages,
     form: formReducer
 })
