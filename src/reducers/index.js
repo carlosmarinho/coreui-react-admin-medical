@@ -2,13 +2,11 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
 import Users from './userReducer';
-import UsersFields from './fieldReducer';
-import Locations from './locationReducer';
+import Messages from './messageReducer';
+
 
 export default combineReducers({
     users: Users,
-    usersFields: UsersFields,
-    login: Users,
-    locations: Locations,
+    message: Messages,
     form: formReducer
 })
