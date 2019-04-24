@@ -17,17 +17,17 @@ export default {
     {
       name: 'Listar Médicos',
       url: '/medicos',
-      icon: 'icon-drop',
+      icon: 'icon-people',
     },
     {
       name: 'Adicionar Médico',
       url: '/theme/colors',
-      icon: 'icon-drop',
+      icon: 'icon-user-follow',
     },
     {
       name: 'Pesquisar Médicos',
       url: '/theme/colors',
-      icon: 'icon-drop',
+      icon: 'icon-directions',
     },
     
     {
@@ -46,17 +46,17 @@ export default {
     {
       name: 'Listar Especialidade ',
       url: '/theme/colors',
-      icon: 'icon-drop',
+      icon: 'icon-layers',
     },
     {
-      name: 'Adicionar Médico',
+      name: 'Add Especialidade',
       url: '/theme/colors',
-      icon: 'icon-drop',
+      icon: 'icon-note',
     },
     {
-      name: 'Pesquisar Especialidade ',
+      name: 'Buscar Especialidade ',
       url: '/theme/colors',
-      icon: 'icon-drop',
+      icon: 'icon-directions',
     },
   ],
 };

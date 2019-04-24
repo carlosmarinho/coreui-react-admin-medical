@@ -21,6 +21,11 @@ function DoctorRow(props) {
       <td>{doctor.crm}</td>
       <td>{doctor.telefone}</td>
       <td>{doctor.activity.name}</td>
+      <td><Link to={doctorLink}>
+        <Badge color={'success'}>Editar</Badge>&nbsp;
+        <Badge color={'danger'}>Excluir</Badge>
+        </Link>
+      </td>
     </tr>
   )
 }
