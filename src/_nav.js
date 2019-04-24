@@ -16,7 +16,7 @@ export default {
     },
     {
       name: 'Listar Médicos',
-      url: '/theme/colors',
+      url: '/medicos',
       icon: 'icon-drop',
     },
     {
