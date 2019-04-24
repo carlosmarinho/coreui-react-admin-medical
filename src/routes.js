@@ -38,6 +38,7 @@ const User = React.lazy(() => import('./views/Users/User'));
 
 const Doctors = React.lazy(() => import('./views/Doctors/Doctors'));
 const Doctor = React.lazy(() => import('./views/Doctors/Doctor'));
+const DoctorEdit = React.lazy(() => import('./views/Doctors/DoctorEdit'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -45,7 +46,8 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', component: Doctors },
 
   { path: '/medicos', exact: true,  name: 'Medicos', component: Doctors },
-  { path: '/medicos/:id', exact: true, name: 'Visualização de Médico', component: Doctor },
+  { path: '/medicos/visualizar/:id', exact: true, name: 'Visualização de Médico', component: Doctor },
+  { path: '/medicos/editar/:id', exact: true, name: 'Edição de Médico', component: DoctorEdit },
 
 
   { path: '/users', exact: true,  name: 'Users', component: Users },

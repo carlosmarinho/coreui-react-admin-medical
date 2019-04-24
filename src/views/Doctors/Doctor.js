@@ -1,15 +1,26 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { connect } from 'react-redux';
+import { fetchDoctor } from '../../actions/doctors';
 
-import usersData from './DoctorsData'
-
-class User extends Component {
+class Doctor extends Component {
+  
+  componentDidMount(){
+    console.log("props aqui: ", this.props.match)
+    this.props.fetchDoctor(this.props.match.params.id);
+  }
 
   render() {
 
-    const user = usersData.find( user => user.id.toString() === this.props.match.params.id)
+    //const doctor = doctorsData.find( doctor => doctor.id.toString() === this.props.match.params.id)
+    
+    let doctorDetails = [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]];
+    if(this.props.doctor){
+      doctorDetails = this.props.doctor ? this.props.doctor : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
+    }
 
-    const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
+    console.log("detalhes: ", doctorDetails);
 
     return (
       <div className="animated fadeIn">
@@ -17,13 +28,13 @@ class User extends Component {
           <Col lg={6}>
             <Card>
               <CardHeader>
-                <strong><i className="icon-info pr-1"></i>User id: {this.props.match.params.id}</strong>
+                <strong><i className="icon-user pr-1"></i>Medico id: {this.props.match.params.id} </strong>
               </CardHeader>
               <CardBody>
                   <Table responsive striped hover>
                     <tbody>
                       {
-                        userDetails.map(([key, value]) => {
+                        _.map(doctorDetails, (value, key) => {
                           return (
                             <tr key={key}>
                               <td>{`${key}:`}</td>
@@ -43,4 +54,12 @@ class User extends Component {
   }
 }
 
-export default User;
+function mapStateToProps(state){
+  return({
+      doctor: state.doctors,
+      message: state.message
+  })
+}
+
+
+export default connect(mapStateToProps, {fetchDoctor})(Doctor)

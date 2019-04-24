@@ -6,13 +6,12 @@ import { connect } from 'react-redux';
 import { fetchDoctors } from '../../actions/doctors';
 
 
-import doctorsData from './DoctorsData'
 
 function DoctorRow(props) {
 
   console.log("props aqui: ", props);
   const doctor = props.doctor
-  const doctorLink = `/doctors/${doctor.id}`
+  const doctorLink = `/medicos/${doctor.id}`
 
 
   return (
@@ -20,10 +19,16 @@ function DoctorRow(props) {
       <td><Link to={doctorLink}>{doctor.name}</Link></td>
       <td>{doctor.crm}</td>
       <td>{doctor.telefone}</td>
-      <td>{doctor.activity.name}</td>
-      <td><Link to={doctorLink}>
-        <Badge color={'success'}>Editar</Badge>&nbsp;
-        <Badge color={'danger'}>Excluir</Badge>
+      <td>{(doctor.activity)?doctor.activity.name:''}</td>
+      <td>
+        <Link to={`/medicos/visualizar/${doctor.id}`}>
+          <Badge color={'warning'}>Visualizar</Badge>&nbsp;
+        </Link>
+        <Link to={`/medicos/editar/${doctor.id}`}>
+          <Badge color={'success'}>Editar</Badge>&nbsp;
+        </Link>
+        <Link to={`/medicos/excluir/${doctor.id}`}>
+          <Badge color={'danger'}>Excluir</Badge>
         </Link>
       </td>
     </tr>
@@ -36,17 +41,24 @@ class Doctors extends Component {
     this.props.fetchDoctors();
   }
 
-  render() {
+  showDoctors(doctors){
+    if(doctors.length > 0){
+      console.log("Caiu aqui dentro do show doctors");
+      return (
+        doctors.map((doctor, index) =>
+          <DoctorRow key={index} doctor={doctor}/>
+        )
+      )
+    }
+  }
 
+  render() {
 
     let doctors = [];
     if(this.props.doctors){
+      console.log("this.props doctors: ", this.props.doctors);
       doctors = this.props.doctors;
     }
-
-    console.log("Doctors aqui no render: ", this.props, " --- ", doctors);
-
-    const doctorList = doctorsData.filter((doctor) => doctor.id < 10)
 
     return (
       <div className="animated fadeIn">
@@ -68,9 +80,7 @@ class Doctors extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {doctors.map((doctor, index) =>
-                      <DoctorRow key={index} doctor={doctor}/>
-                    )}
+                    {this.showDoctors(doctors)}
                   </tbody>
                 </Table>
               </CardBody>
