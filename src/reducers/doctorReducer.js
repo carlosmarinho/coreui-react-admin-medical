@@ -1,12 +1,16 @@
-import { FETCH_DOCTOR, LOGIN, FETCH_DOCTORS, CREATE, CREATE_DOCTOR, EDIT_DOCTOR, REMOVE_DOCTOR } from "../actions/types";
+import { FETCH_DOCTOR, FETCH_DOCTORS, CREATE, SUCCESS_CREATE_DOCTOR, SUCCESS_EDIT_DOCTOR, ERROR_CREATE_DOCTOR, ERROR_EDIT_DOCTOR, REMOVE_DOCTOR } from "../actions/types";
 
 export default function(state = null, action) {
     console.log("action: ", action)
     switch (action.type) {
-        case CREATE_DOCTOR:
+        case SUCCESS_CREATE_DOCTOR:
             return action.payload;
-        case EDIT_DOCTOR:
+        case SUCCESS_EDIT_DOCTOR:
             return action.payload;
+        case ERROR_CREATE_DOCTOR:
+            return action.payload;
+        case ERROR_EDIT_DOCTOR:
+            return action.payload
         case REMOVE_DOCTOR:
             return action.payload;
         case FETCH_DOCTOR:
@@ -14,8 +18,6 @@ export default function(state = null, action) {
         case FETCH_DOCTORS:
             return action.payload.data;
         case CREATE:
-            return action.payload;
-        case LOGIN:
             return action.payload;
         default: return state;
     }
