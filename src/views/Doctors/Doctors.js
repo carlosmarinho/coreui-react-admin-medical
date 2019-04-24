@@ -64,6 +64,7 @@ class Doctors extends Component {
                       <th scope="col">CRM</th>
                       <th scope="col">Telefone</th>
                       <th scope="col">Especialidade</th>
+                      <th scope="col">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
