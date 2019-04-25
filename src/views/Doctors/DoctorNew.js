@@ -17,10 +17,6 @@ class DoctorNew extends Component {
     this.showMessage = this.showMessage.bind(this);
   }
 
-  componentDidMount(){
-    console.log("props aqui: ", this.props.match)
-    this.props.fetchDoctor(this.props.match.params.id);
-  }
 
   handleSubmit(values){
     console.log("values", values);
@@ -117,7 +113,7 @@ class DoctorNew extends Component {
                   <strong><i className="icon-user pr-1"></i>Medico id: {this.props.match.params.id} </strong>
                 </CardHeader>
                 <CardBody>
-                    
+                    {this.showMessage()}
                     <Field
                         name="name"
                         component={this.renderField}
@@ -147,11 +143,26 @@ class DoctorNew extends Component {
                         validate={[ required ]}
                         placeholder="Informe o nome..."
                     />
-
+                    {/*@todo buscar da api de especialidade*/}
                     <Field
 													name="activity_id"
 													component={this.renderSelect}
-													options={[{'1':'Pediatra'}]}
+                          options={[{'1':'ALERGOLOGIA'},
+                            {'2':'ANGIOLOGIA'},
+                            {'3':'BUCO MAXILO'},
+                            {'4':'CARDIOLOGIA CLÍNICA'},
+                            {'5':'CARDIOLOGIA INFANTIL'},
+                            {'6':'CIRURGIA CABEÇA E PESCOÇO'},
+                            {'7':'CIRURGIA CARDÍACA'},
+                            {'8':'CIRURGIA DE CABEÇA/PESCOÇO'},
+                            {'9':'CIRURGIA DE TÓRAX'},
+                            {'10':'CIRURGIA GERAL'},
+                            {'11':'CIRURGIA PEDIÁTRICA'},
+                            {'12':'CIRURGIA PLÁSTICA'},
+                            {'13':'CIRURGIA TORÁCICA'},
+                            {'14':'CIRURGIA VASCULAR'},
+                            {'15':'CLÍNICA MÉDICA'},  
+                          ]}
                           label="Especialidade"
                           placeholder="Escolha a especialidade..."
 													validate={[ required ]}

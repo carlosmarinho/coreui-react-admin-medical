@@ -4,7 +4,7 @@ import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import {Button, CardFooter, Form, FormGroup, FormText, Input, Label } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { fetchDoctor } from '../../actions/doctors';
+import { fetchDoctor, editDoctor } from '../../actions/doctors';
 
 const required = value => value ? undefined : 'Campo Obrigatório'
 
@@ -24,7 +24,7 @@ class DoctorEdit extends Component {
 
   handleSubmit(values){
     console.log("values", values);
-    this.props.createDoctor(values);
+    this.props.editDoctor(this.props.match.params.id, values);
   }
 
   showMessage(){
@@ -70,15 +70,24 @@ class DoctorEdit extends Component {
         </Col>
         <Col xs="12" md="9">
           <Field {...input}  component="select" className="native" className="form-control">
-            {(!field.multiple)?<option>{label}</option>:''}
+            {(!field.multiple)?<option>{field.placeholder}</option>:''}
             {(field.options)?field.options.map((option, key) => {
-                if(option._id && option.nome){
-                  return(
-                    <option key={`key-${label}-${option._id}`} value={option._id}>{option.nome}</option>
-                  )
-                }
+              if(_.isObject(option)){
+                return(
+                  <option key={`key-${Object.keys(option)[0]}`} value={Object.keys(option)[0]}>{Object.values(option)[0]}</option>
+                )
+              }
+              else{
+                return(
+                  <option key={`key-${option}`} value={key}>{option}</option>
+                )
+              }
             }):''}
           </Field>
+
+          
+
+
 				  {touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))} 
         </Col>
       </FormGroup>
@@ -108,9 +117,10 @@ class DoctorEdit extends Component {
                   <strong><i className="icon-user pr-1"></i>Medico id: {this.props.match.params.id} </strong>
                 </CardHeader>
                 <CardBody>
+                  {this.showMessage()}
                     
                     <Field
-                        name="nome"
+                        name="name"
                         component={this.renderField}
                         type="text"
                         label="Nome"
@@ -138,12 +148,28 @@ class DoctorEdit extends Component {
                         validate={[ required ]}
                         placeholder="Informe o nome..."
                     />
-
+                    {/*@todo buscar da api de especialidade*/}
                     <Field
-													name="activities"
+													name="activity_id"
 													component={this.renderSelect}
-													options={[{'1':'Pediatra'}]}
-													label="Especialidade"
+                          options={[{'1':'ALERGOLOGIA'},
+                            {'2':'ANGIOLOGIA'},
+                            {'3':'BUCO MAXILO'},
+                            {'4':'CARDIOLOGIA CLÍNICA'},
+                            {'5':'CARDIOLOGIA INFANTIL'},
+                            {'6':'CIRURGIA CABEÇA E PESCOÇO'},
+                            {'7':'CIRURGIA CARDÍACA'},
+                            {'8':'CIRURGIA DE CABEÇA/PESCOÇO'},
+                            {'9':'CIRURGIA DE TÓRAX'},
+                            {'10':'CIRURGIA GERAL'},
+                            {'11':'CIRURGIA PEDIÁTRICA'},
+                            {'12':'CIRURGIA PLÁSTICA'},
+                            {'13':'CIRURGIA TORÁCICA'},
+                            {'14':'CIRURGIA VASCULAR'},
+                            {'15':'CLÍNICA MÉDICA'},  
+                          ]}
+                          label="Especialidade"
+                          placeholder="Escolha a especialidade..."
 													validate={[ required ]}
 										/>
 
@@ -166,12 +192,15 @@ class DoctorEdit extends Component {
 function mapStateToProps(state){
   return({
       doctor: state.doctors,
-      message: state.message
+      message: state.message,
+      initialValues: (state.doctors)?state.doctors:[]
   })
 }
 
-const Connect = connect(mapStateToProps, {fetchDoctor})(DoctorEdit)
 
-export default reduxForm ({
-    form: 'editar-medico'
-})(Connect);
+const myForm = reduxForm ({
+  form: 'editar-medico',
+  enableReinitialize: true
+})(DoctorEdit);
+
+export default connect(mapStateToProps, {fetchDoctor, editDoctor})(myForm);

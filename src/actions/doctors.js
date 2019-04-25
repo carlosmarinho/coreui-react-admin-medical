@@ -37,7 +37,7 @@ export async function editDoctor(id, values, callback) {
     console.log("vai criar o doutor");
     let request;
     try{
-        request = await axios.put(`${process.env.REACT_APP_URL_API}doctors${id}`, values);
+        request = await axios.put(`${process.env.REACT_APP_URL_API}doctors/${id}`, values);
         console.log("vai enviar o request para criar: ", request);
         if(request.statusText === 'OK'){
             return({
