@@ -1,4 +1,4 @@
-# Medical Admin - React
+# Medical Admin front - React
 
 ## Tecnologia utilizada
 
