@@ -8,20 +8,42 @@ import { fetchDoctors, removeDoctor } from '../../actions/doctors';
 
 class Doctors extends Component {
   
+  constructor(){
+    super();
+
+    this.state = {
+      listDoctors:[]
+    }
+  }
+
+
   componentDidMount(){
     this.props.fetchDoctors();
   }
 
-
-  removeToCollection(item, e) {
-    console.log("item: ", item);
-    this.props.removeDoctor(item);
+  componentWillReceiveProps(nextProps){
+    if(nextProps.doctors){
+      this.setState({listDoctors: nextProps.doctors})
+    }
   }
 
-  showDoctors(doctors){
-    if(doctors.length > 0){
+  async removeToCollection(item, e) {
+    
+    let listDoctors = this.state.listDoctors.filter(doctor => {
+      console.log(doctor.id, " ---- ", item)
+      return (doctor.id != item)
+    })
+
+    console.log(listDoctors)
+    await this.props.removeDoctor(item);
+    
+    this.setState({listDoctors:listDoctors})
+  }
+
+  showDoctors(){
+    if(this.state.listDoctors.length > 0){
       return (
-        doctors.map((doctor, index) => {
+        this.state.listDoctors.map((doctor, index) => {
           return (
             <tr key={doctor.id.toString()}>
               <td><Link to={`/medicos/visualizar/${doctor.id}`}>{doctor.name}</Link></td>
@@ -66,11 +88,8 @@ class Doctors extends Component {
 
   render() {
 
-    let doctors = [];
-    if(this.props.doctors){
-      console.log("this.props doctors: ", this.props.doctors);
-      doctors = this.props.doctors;
-    }
+    
+    
 
     
     return (
@@ -94,7 +113,7 @@ class Doctors extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.showDoctors(doctors)}
+                    {this.showDoctors()}
                   </tbody>
                 </Table>
                 <div className="container">
