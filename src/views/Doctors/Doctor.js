@@ -17,7 +17,14 @@ class Doctor extends Component {
     
     let doctorDetails = [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]];
     if(this.props.doctor){
-      doctorDetails = this.props.doctor ? this.props.doctor : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
+
+      let doctor = null;
+      if(this.props.doctor.length){
+        doctor = this.props.doctor[this.props.match.params.id];
+      }
+      else 
+        doctor = this.props.doctor;
+      doctorDetails = doctor ? doctor : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
     }
 
     console.log("detalhes: ", doctorDetails);

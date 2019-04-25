@@ -5,6 +5,8 @@ import {Button, CardFooter, Form, FormGroup, FormText, Input, Label } from 'reac
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { fetchDoctor, editDoctor } from '../../actions/doctors';
+import { fetchActivities} from '../../actions/activities';
+
 
 const required = value => value ? undefined : 'Campo Obrigatório'
 
@@ -18,8 +20,8 @@ class DoctorEdit extends Component {
   }
 
   componentDidMount(){
-    console.log("props aqui: ", this.props.match)
     this.props.fetchDoctor(this.props.match.params.id);
+    this.props.fetchActivities();
   }
 
   handleSubmit(values){
@@ -73,9 +75,16 @@ class DoctorEdit extends Component {
             {(!field.multiple)?<option>{field.placeholder}</option>:''}
             {(field.options)?field.options.map((option, key) => {
               if(_.isObject(option)){
-                return(
-                  <option key={`key-${Object.keys(option)[0]}`} value={Object.keys(option)[0]}>{Object.values(option)[0]}</option>
-                )
+                if(option.id && option.name){
+                  return(
+                    <option key={`key-${label}-${option.id}`} value={option.id}>{option.name}</option>
+                  )
+                }
+                else{
+                  return(
+                    <option key={`key-${label}-${Object.keys(option)[0]}`} value={Object.keys(option)[0]}>{Object.values(option)[0]}</option>
+                  )
+                }
               }
               else{
                 return(
@@ -104,7 +113,10 @@ class DoctorEdit extends Component {
       doctorDetails = this.props.doctor ? this.props.doctor : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
     }
 
-    console.log("detalhes: ", doctorDetails);
+    let activities = [];
+    if(this.props.activities){
+      activities = this.props.activities
+    }
 
     return (
       <div className="animated fadeIn">
@@ -152,22 +164,7 @@ class DoctorEdit extends Component {
                     <Field
 													name="activity_id"
 													component={this.renderSelect}
-                          options={[{'1':'ALERGOLOGIA'},
-                            {'2':'ANGIOLOGIA'},
-                            {'3':'BUCO MAXILO'},
-                            {'4':'CARDIOLOGIA CLÍNICA'},
-                            {'5':'CARDIOLOGIA INFANTIL'},
-                            {'6':'CIRURGIA CABEÇA E PESCOÇO'},
-                            {'7':'CIRURGIA CARDÍACA'},
-                            {'8':'CIRURGIA DE CABEÇA/PESCOÇO'},
-                            {'9':'CIRURGIA DE TÓRAX'},
-                            {'10':'CIRURGIA GERAL'},
-                            {'11':'CIRURGIA PEDIÁTRICA'},
-                            {'12':'CIRURGIA PLÁSTICA'},
-                            {'13':'CIRURGIA TORÁCICA'},
-                            {'14':'CIRURGIA VASCULAR'},
-                            {'15':'CLÍNICA MÉDICA'},  
-                          ]}
+                          options={activities}
                           label="Especialidade"
                           placeholder="Escolha a especialidade..."
 													validate={[ required ]}
@@ -193,6 +190,7 @@ function mapStateToProps(state){
   return({
       doctor: state.doctors,
       message: state.message,
+      activities: state.activities,
       initialValues: (state.doctors)?state.doctors:[]
   })
 }
@@ -203,4 +201,4 @@ const myForm = reduxForm ({
   enableReinitialize: true
 })(DoctorEdit);
 
-export default connect(mapStateToProps, {fetchDoctor, editDoctor})(myForm);
+export default connect(mapStateToProps, {fetchDoctor, editDoctor, fetchActivities})(myForm);
