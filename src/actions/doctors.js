@@ -27,7 +27,7 @@ export async function createDoctor(doctor) {
 
         return({
             type: ERROR_CREATE_DOCTOR,
-            payload: {msg: e.response.data.message}
+            payload: {msg: e.response}
         })
     }
 }

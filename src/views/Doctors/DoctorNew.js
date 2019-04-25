@@ -119,7 +119,7 @@ class DoctorNew extends Component {
                 <CardBody>
                     
                     <Field
-                        name="nome"
+                        name="name"
                         component={this.renderField}
                         type="text"
                         label="Nome"
@@ -149,7 +149,7 @@ class DoctorNew extends Component {
                     />
 
                     <Field
-													name="activities"
+													name="activity_id"
 													component={this.renderSelect}
 													options={[{'1':'Pediatra'}]}
                           label="Especialidade"
@@ -180,7 +180,7 @@ function mapStateToProps(state){
   })
 }
 
-const Connect = connect(mapStateToProps, {fetchDoctor})(DoctorNew)
+const Connect = connect(mapStateToProps, {fetchDoctor, createDoctor})(DoctorNew)
 
 export default reduxForm ({
     form: 'cadastro-medico'
