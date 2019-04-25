@@ -20,11 +20,7 @@ class Activities extends Component {
             <tr key={activity.id.toString()}>
               <td><Link to={`/especialidades/visualizar/${activity.id}`}>{activity.name}</Link></td>
               <td>{activity.description}</td>
-              <td>
-                <Link to={`/especialidades/visualizar/${activity.id}`}>
-                  <Badge color={'warning'}>Visualizar</Badge>&nbsp;
-                </Link>
-              </td>
+              
             </tr>
           )
         }
@@ -73,7 +69,6 @@ class Activities extends Component {
                     <tr>
                       <th scope="col">Nome</th>
                       <th scope="col">Descrição</th>
-                      <th scope="col">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
