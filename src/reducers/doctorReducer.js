@@ -10,8 +10,6 @@ export default function(state = null, action) {
         return action.payload;
         case ERROR_EDIT_DOCTOR:
         return action.payload
-        case REMOVE_DOCTOR:
-        return action.payload;
         case FETCH_DOCTOR:
         console.log("action: ", action.payload.data)
             return action.payload.data;

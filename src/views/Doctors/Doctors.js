@@ -3,54 +3,66 @@ import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 
-import { fetchDoctors } from '../../actions/doctors';
+import { fetchDoctors, removeDoctor } from '../../actions/doctors';
 
-
-
-function DoctorRow(props) {
-
-  console.log("props aqui: ", props);
-  const doctor = props.doctor
-  const doctorLink = `/medicos/${doctor.id}`
-
-
-  return (
-    <tr key={doctor.id.toString()}>
-      <td><Link to={doctorLink}>{doctor.name}</Link></td>
-      <td>{doctor.crm}</td>
-      <td>{doctor.telefone}</td>
-      <td>{(doctor.activity)?doctor.activity.name:''}</td>
-      <td>
-        <Link to={`/medicos/visualizar/${doctor.id}`}>
-          <Badge color={'warning'}>Visualizar</Badge>&nbsp;
-        </Link>
-        <Link to={`/medicos/editar/${doctor.id}`}>
-          <Badge color={'success'}>Editar</Badge>&nbsp;
-        </Link>
-        <Link to={`/medicos/excluir/${doctor.id}`}>
-          <Badge color={'danger'}>Excluir</Badge>
-        </Link>
-      </td>
-    </tr>
-  )
-}
 
 class Doctors extends Component {
-
+  
   componentDidMount(){
     this.props.fetchDoctors();
   }
 
+
+  removeToCollection(item, e) {
+    console.log("item: ", item);
+    this.props.removeDoctor(item);
+  }
+
   showDoctors(doctors){
     if(doctors.length > 0){
-      console.log("Caiu aqui dentro do show doctors");
       return (
-        doctors.map((doctor, index) =>
-          <DoctorRow key={index} doctor={doctor}/>
+        doctors.map((doctor, index) => {
+          return (
+            <tr key={doctor.id.toString()}>
+              <td><Link to={`/medicos/visualizar/${doctor.id}`}>{doctor.name}</Link></td>
+              <td>{doctor.crm}</td>
+              <td>{doctor.telefone}</td>
+              <td>{(doctor.activity)?doctor.activity.name:''}</td>
+              <td>
+                <Link to={`/medicos/visualizar/${doctor.id}`}>
+                  <Badge color={'warning'}>Visualizar</Badge>&nbsp;
+                </Link>
+                <Link to={`/medicos/editar/${doctor.id}`}>
+                  <Badge color={'success'}>Editar</Badge>&nbsp;
+                </Link>
+                         
+                  <a href="#"><Badge onClick={() => {if(window.confirm('Delete the item?')){this.removeToCollection(doctor.id)};}} color={'danger'}>Excluir</Badge></a>
+                
+              </td>
+            </tr>
+          )
+        }
         )
       )
     }
   }
+
+  showMessage(){
+    console.log("mensagem: ", this.props.message);
+    if(this.props.message){
+        if(this.props.message.error && this.props.message.error.doctor){
+            return(
+                <p className="text-danger">{this.props.message.error.doctor.msg}</p>
+            )
+        }
+        else if(this.props.message.success && this.props.message.success.doctor){
+            return(
+                <p className="text-success">{this.props.message.success.doctor.msg} </p>
+            )
+        }
+    }
+  }
+
 
   render() {
 
@@ -60,6 +72,7 @@ class Doctors extends Component {
       doctors = this.props.doctors;
     }
 
+    
     return (
       <div className="animated fadeIn">
         <Row>
@@ -69,6 +82,7 @@ class Doctors extends Component {
                 <i className="fa fa-align-justify"></i> Médicos <small className="text-muted">listagem</small>
               </CardHeader>
               <CardBody>
+                {this.showMessage()}
                 <Table responsive hover>
                   <thead>
                     <tr>
@@ -83,6 +97,10 @@ class Doctors extends Component {
                     {this.showDoctors(doctors)}
                   </tbody>
                 </Table>
+                <div className="container">
+                
+        
+      </div>
               </CardBody>
             </Card>
           </Col>
@@ -100,4 +118,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps, {fetchDoctors})(Doctors)
+export default connect(mapStateToProps, {fetchDoctors, removeDoctor})(Doctors)

@@ -77,7 +77,7 @@ export const removeDoctor = (ids) => {
 
     return {
         type: REMOVE_DOCTOR,
-        payload: request
+        payload: {msg: "Médico excluído com sucesso!" }
     }
 }
 
