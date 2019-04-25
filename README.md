@@ -1,5 +1,10 @@
 # Medical Admin - React
 
+## Tecnologia utilizada
+
+ - React.js
+ - React CoreUi
+
 ## Pré Requisitos
 
 - Ter o Node.js instalado na máquina
@@ -23,6 +28,6 @@ $ npm install
 # Ir para o diretório do projeto
 $ cd <path>/coreui-react-admin-medical
 
-# instalar as dependências do projeto
+# Rodar o projeto
 $ npm start
 ```
