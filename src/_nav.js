@@ -24,11 +24,6 @@ export default {
       url: '/medicos/novo',
       icon: 'icon-user-follow',
     },
-    {
-      name: 'Pesquisar Médicos',
-      url: '/theme/colors',
-      icon: 'icon-directions',
-    },
     
     {
       divider: true,
@@ -45,18 +40,8 @@ export default {
     },
     {
       name: 'Listar Especialidade ',
-      url: '/theme/colors',
+      url: '/especialidades',
       icon: 'icon-layers',
-    },
-    {
-      name: 'Add Especialidade',
-      url: '/theme/colors',
-      icon: 'icon-note',
-    },
-    {
-      name: 'Buscar Especialidade ',
-      url: '/theme/colors',
-      icon: 'icon-directions',
-    },
+    } 
   ],
 };
