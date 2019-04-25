@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import axios from 'axios';
-import { FETCH_DOCTOR, FETCH_DOCTORS, SUCCESS_CREATE_DOCTOR, ERROR_CREATE_DOCTOR, SUCCESS_EDIT_DOCTOR, ERROR_EDIT_DOCTOR, REMOVE_DOCTOR, UPDATE_DOCTOR_FIELD } from "./types";
+import { FETCH_DOCTOR, FETCH_DOCTORS, SUCCESS_CREATE_DOCTOR, ERROR_CREATE_DOCTOR, SUCCESS_EDIT_DOCTOR, ERROR_EDIT_DOCTOR, REMOVE_DOCTOR } from "./types";
 
 
 export async function createDoctor(doctor) {
@@ -64,13 +64,11 @@ export async function editDoctor(id, values, callback) {
 
 export const removeDoctor = (ids) => {
 
-    console.log("aqui ids: ", ids);
     let request = null;
     if( ids instanceof Array && ids.length > 1) {
         request = axios.delete(`${process.env.REACT_APP_URL_API}doctors`, {params: ids});
     }
     else{
-        console.log("ué não é array como pode isso?")
         request = axios.delete(`${process.env.REACT_APP_URL_API}doctors/${ids}`);
     }
 
