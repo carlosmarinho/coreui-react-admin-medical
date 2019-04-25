@@ -70,15 +70,24 @@ class DoctorNew extends Component {
         </Col>
         <Col xs="12" md="9">
           <Field {...input}  component="select" className="native" className="form-control">
-            {(!field.multiple)?<option>{label}</option>:''}
+            {(!field.multiple)?<option>{field.placeholder}</option>:''}
             {(field.options)?field.options.map((option, key) => {
-                if(option._id && option.nome){
-                  return(
-                    <option key={`key-${label}-${option._id}`} value={option._id}>{option.nome}</option>
-                  )
-                }
+              if(_.isObject(option)){
+                return(
+                  <option key={`key-${Object.keys(option)[0]}`} value={Object.keys(option)[0]}>{Object.values(option)[0]}</option>
+                )
+              }
+              else{
+                return(
+                  <option key={`key-${option}`} value={key}>{option}</option>
+                )
+              }
             }):''}
           </Field>
+
+          
+
+
 				  {touched && ((error && <span className="text-danger">{error}</span>) || (warning && <span>{warning}</span>))} 
         </Col>
       </FormGroup>
@@ -143,7 +152,8 @@ class DoctorNew extends Component {
 													name="activities"
 													component={this.renderSelect}
 													options={[{'1':'Pediatra'}]}
-													label="Especialidade"
+                          label="Especialidade"
+                          placeholder="Escolha a especialidade..."
 													validate={[ required ]}
 										/>
 

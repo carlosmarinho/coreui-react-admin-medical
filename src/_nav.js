@@ -21,7 +21,7 @@ export default {
     },
     {
       name: 'Adicionar Médico',
-      url: '/theme/colors',
+      url: '/medicos/novo',
       icon: 'icon-user-follow',
     },
     {
