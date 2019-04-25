@@ -30,14 +30,14 @@ class DoctorEdit extends Component {
   showMessage(){
       console.log("mensagem: ", this.props.message);
       if(this.props.message){
-          if(this.props.message.error && this.props.message.error.user){
+          if(this.props.message.error && this.props.message.error.doctor){
               return(
-                  <p className="text-danger">{this.props.message.error.user.msg}</p>
+                  <p className="text-danger">{this.props.message.error.doctor.msg}</p>
               )
           }
-          else if(this.props.message.success && this.props.message.success.user){
+          else if(this.props.message.success && this.props.message.success.doctor){
               return(
-                  <p className="text-success">Usuário cadastrado com sucesso! Valide o seu cadastro através do email que foi enviado.</p>
+                  <p className="text-success">Médico editado com sucesso!</p>
               )
           }
       }
@@ -176,7 +176,7 @@ class DoctorEdit extends Component {
                 </CardBody>
                 <CardFooter>
                   <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
-                  <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                  {/*<Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>*/}
                 </CardFooter>
               </Form>
             </Card>

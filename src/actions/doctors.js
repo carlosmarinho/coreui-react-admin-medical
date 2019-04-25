@@ -9,7 +9,7 @@ export async function createDoctor(doctor) {
     try{
         request = await axios.post(`${process.env.REACT_APP_URL_API}doctors`, doctor);
         console.log("vai enviar o request para criar: ", request);
-        if(request.statusText == 'OK'){
+        if(request.statusText == 'Created'){
             return({
                 type: SUCCESS_CREATE_DOCTOR,
                 payload: request
