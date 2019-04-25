@@ -18,9 +18,8 @@ class Activities extends Component {
         activities.map((activity, index) => {
           return (
             <tr key={activity.id.toString()}>
-              <td><Link to={`/especialidades/visualizar/${activity.id}`}>{activity.name}</Link></td>
+              <td>{activity.name}</td>
               <td>{activity.description}</td>
-              
             </tr>
           )
         }

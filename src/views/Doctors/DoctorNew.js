@@ -5,6 +5,7 @@ import {Button, CardFooter, Form, FormGroup, FormText, Input, Label } from 'reac
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { fetchDoctor, createDoctor } from '../../actions/doctors';
+import { fetchActivities} from '../../actions/activities';
 
 const required = value => value ? undefined : 'Campo Obrigatório'
 
@@ -17,6 +18,9 @@ class DoctorNew extends Component {
     this.showMessage = this.showMessage.bind(this);
   }
 
+  componentDidMount(){
+    this.props.fetchActivities();
+  }
 
   handleSubmit(values){
     console.log("values", values);
@@ -68,10 +72,18 @@ class DoctorNew extends Component {
           <Field {...input}  component="select" className="native" className="form-control">
             {(!field.multiple)?<option>{field.placeholder}</option>:''}
             {(field.options)?field.options.map((option, key) => {
+              
               if(_.isObject(option)){
-                return(
-                  <option key={`key-${Object.keys(option)[0]}`} value={Object.keys(option)[0]}>{Object.values(option)[0]}</option>
-                )
+                if(option.id && option.name){
+                  return(
+                    <option key={`key-${label}-${option.id}`} value={option.id}>{option.name}</option>
+                  )
+                }
+                else{
+                  return(
+                    <option key={`key-${label}-${Object.keys(option)[0]}`} value={Object.keys(option)[0]}>{Object.values(option)[0]}</option>
+                  )
+                }
               }
               else{
                 return(
@@ -100,7 +112,12 @@ class DoctorNew extends Component {
       doctorDetails = this.props.doctor ? this.props.doctor : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
     }
 
-    console.log("detalhes: ", doctorDetails);
+    let activities = [];
+    if(this.props.activities){
+      activities = this.props.activities
+    }
+
+    console.log("especialidades: ", activities);
 
     return (
       <div className="animated fadeIn">
@@ -147,22 +164,7 @@ class DoctorNew extends Component {
                     <Field
 													name="activity_id"
 													component={this.renderSelect}
-                          options={[{'1':'ALERGOLOGIA'},
-                            {'2':'ANGIOLOGIA'},
-                            {'3':'BUCO MAXILO'},
-                            {'4':'CARDIOLOGIA CLÍNICA'},
-                            {'5':'CARDIOLOGIA INFANTIL'},
-                            {'6':'CIRURGIA CABEÇA E PESCOÇO'},
-                            {'7':'CIRURGIA CARDÍACA'},
-                            {'8':'CIRURGIA DE CABEÇA/PESCOÇO'},
-                            {'9':'CIRURGIA DE TÓRAX'},
-                            {'10':'CIRURGIA GERAL'},
-                            {'11':'CIRURGIA PEDIÁTRICA'},
-                            {'12':'CIRURGIA PLÁSTICA'},
-                            {'13':'CIRURGIA TORÁCICA'},
-                            {'14':'CIRURGIA VASCULAR'},
-                            {'15':'CLÍNICA MÉDICA'},  
-                          ]}
+                          options={activities}
                           label="Especialidade"
                           placeholder="Escolha a especialidade..."
 													validate={[ required ]}
@@ -187,11 +189,12 @@ class DoctorNew extends Component {
 function mapStateToProps(state){
   return({
       doctor: state.doctors,
+      activities: state.activities,
       message: state.message
   })
 }
 
-const Connect = connect(mapStateToProps, {fetchDoctor, createDoctor})(DoctorNew)
+const Connect = connect(mapStateToProps, {fetchDoctor, createDoctor, fetchActivities})(DoctorNew)
 
 export default reduxForm ({
     form: 'cadastro-medico'
